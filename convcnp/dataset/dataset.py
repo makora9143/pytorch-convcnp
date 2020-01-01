@@ -2,6 +2,8 @@ import torch
 from torch.utils import data as tdata
 from gpytorch.utils.cholesky import psd_safe_cholesky
 
+from .kernels import eq_kernel, matern_kernel, periodic_kernel
+
 
 class Synthetic1D(tdata.Dataset):
     def __init__(self,
@@ -17,7 +19,15 @@ class Synthetic1D(tdata.Dataset):
         self.x_dim = 1
         self.y_dim = 1
 
-        self.kernel = kernel
+        if kernel == 'eq':
+            self.kernel = eq_kernel
+        elif kernel == 'matern':
+            self.kernel = matern_kernel
+        elif kernel == 'periodic':
+            self.kernel = periodic_kernel
+        else:
+            raise NotImplementedError('{} kernel is not implemented'.format(kernel))
+
         self.length_scale = length_scale
         self.output_scale = output_scale
 

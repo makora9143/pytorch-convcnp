@@ -7,11 +7,10 @@ from torch.utils.tensorboard import SummaryWriter
 
 from fastprogress import master_bar, progress_bar
 
-from convcnp import ConvCNP1d
-from gp import oracle_gp
-from dataset import Synthetic1D
-from kernels import eq_kernel, matern_kernel, periodic_kernel
-from visualize import plot_all, convert_tfboard
+from convcnp.models import ConvCNP1d
+from convcnp.gp import oracle_gp
+from convcnp.dataset import Synthetic1D
+from convcnp.visualize import plot_all, convert_tfboard
 
 torch.set_default_dtype(torch.float64)
 
@@ -108,14 +107,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     filename = 'convcnp_{}.pth.gz'.format(args.kernel)
-    if args.kernel == 'eq':
-        args.kernel = eq_kernel
-    elif args.kernel == 'matern':
-        args.kernel = matern_kernel
-    elif args.kernel == 'periodic':
-        args.kernel = periodic_kernel
-    else:
-        raise NotImplementedError()
 
     if torch.cuda.is_available():
         args.device = torch.device('cuda')

@@ -7,7 +7,7 @@ import torch
 from torchvision.transforms import ToTensor
 from torchvision.utils import make_grid
 
-from utils import cast_numpy
+from .utils import cast_numpy
 
 
 def plot_model_output(xt, y_pred, std, color):
